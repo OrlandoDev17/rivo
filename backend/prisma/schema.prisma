@@ -1,0 +1,157 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  // Campos Obligatorios
+  cedula String @id @unique
+  name String
+  phone String
+  password String
+  role Role
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Campos Opcionales para completar perfil
+  email String? @unique
+  address String?
+  photo String?
+  ciPhoto String?
+  driverLicense String?
+  driverLicensePhoto String?
+  vehicle String?
+  vehiclePhoto String?
+
+  // Relaciones
+  rides Ride[] @relation("ClientRides")
+  ridesDriven Ride[] @relation("DriverRides")
+  payments Payment[]
+  reports Report[]
+  ratingsGiven Rating[] @relation("UserRatings")
+  ratingsReceived Rating[] @relation("DriverRatings")
+}
+
+model Ride {
+  id Int @id @default(autoincrement())
+
+  // Origen
+  origin String
+  originLat Float?
+  originLng Float?
+
+  // Destino
+  destination String
+  destinationLat Float?
+  destinationLng Float?
+
+  // Agendamiento Opcional
+  scheduled Boolean @default(false)
+  scheduledAt DateTime?
+
+  // Opciones de viaje
+  travelOptions TravelOptions
+  note String?
+
+  // Tiempos de viaje
+  requestedAt DateTime @default(now())
+  assignedAt DateTime?
+  completedAt DateTime?
+
+  // Estado del viaje
+  status RideStatus @default(PENDING)
+
+  // Cliente que solicita
+  client User @relation("ClientRides", fields: [clientCedula], references: [cedula])
+  clientCedula String
+
+  // Conductor asignado (Opcional al inicio)
+  driver User? @relation("DriverRides", fields: [driverCedula], references: [cedula])
+  driverCedula String?
+
+  // Feedback
+  feedback String?
+
+  // Pago
+  paymentMethod PaymentMethod
+  cost Float?
+  payment Payment?
+
+  // Confirmacion de asignacion
+  confirmationSent Boolean @default(false)
+}
+
+model Payment {
+  id Int @id @default(autoincrement())
+  
+  // Usuario que paga
+  user User @relation(fields: [userId], references: [cedula])
+  userId String
+
+  // Viaje
+  ride Ride @relation(fields: [rideId], references: [id])
+  rideId Int @unique
+
+  // Metodo de pago
+  paymentMethod PaymentMethod
+
+  // Monto
+  amount Float
+
+  // Fecha de pago
+  paidAt DateTime?
+}
+
+model Report {
+  id           Int      @id @default(autoincrement())
+  user         User     @relation(fields: [userCedula], references: [cedula])
+  userCedula   String
+  description  String
+  status       ReportStatus @default(PENDING)
+  createdAt    DateTime @default(now())
+}
+
+model Rating {
+  id           Int      @id @default(autoincrement())
+  user         User     @relation("UserRatings", fields: [userCedula], references: [cedula])
+  userCedula   String
+  driver       User     @relation("DriverRatings", fields: [driverCedula], references: [cedula])
+  driverCedula String
+  score        Int      // 1–5
+  comment      String?
+  createdAt    DateTime @default(now())
+}
+
+enum Role {
+  CLIENT
+  DRIVER
+  ADMIN
+}
+
+enum RideStatus {
+  PENDING
+  ASSIGNED
+  COMPLETED
+  CANCELLED
+}
+
+enum TravelOptions {
+  ONE_WAY
+  ROUND_TRIP
+}
+
+enum PaymentMethod {
+  CASH
+  MOBILE_PAY
+  DOLLARS
+}
+
+enum ReportStatus {
+  PENDING
+  RESOLVED
+  CLOSED
+}
