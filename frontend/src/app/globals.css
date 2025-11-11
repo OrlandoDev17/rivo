@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+@theme {
+  --color-electric-blue: #1e3a8a;
+  --color-dark-blue: #0f172a;
+}
+
+body {
+  @apply bg-linear-to-br from-electric-blue to-dark-blue min-h-screen text-white;
+  font-family: var(--font-montserrat);
+}
