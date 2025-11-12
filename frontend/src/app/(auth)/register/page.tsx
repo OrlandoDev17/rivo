@@ -8,7 +8,7 @@ import { Field } from "@/components/auth/Field";
 // Hooks
 import { useAuth } from "@/context/AuthContext";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 // Constantes
 import { REGISTER_FIELDS } from "@/lib/constants";
@@ -19,7 +19,6 @@ import { FormValues } from "@/lib/types";
 
 export default function Register() {
   const {
-    formValues,
     setFormValues,
     role,
     setRole,
@@ -35,14 +34,14 @@ export default function Register() {
   useEffect(() => {
     if (success && isAuthenticated) {
       if (role === "CLIENT") {
-        router.push("/client");
+        router.push("/travelPanel");
       }
 
       if (role === "DRIVER") {
-        router.push("/driver");
+        router.push("/driverPanel");
       }
     }
-  }, [success, isAuthenticated]);
+  }, [success, isAuthenticated, role, router]);
 
   const handleRoleChange = (role: string) => {
     setRole(role);
@@ -63,7 +62,7 @@ export default function Register() {
 
   return (
     <main className="flex items-center justify-center h-screen p-6">
-      <article className="flex flex-col gap-6 w-full">
+      <article className="flex flex-col gap-6 w-full max-w-md">
         <header className="flex flex-col items-center gap-4 mb-4">
           <img className="w-44" src="/rivo.svg" alt="Logo de Rivo" />
           <h1 className="text-3xl font-bold tracking-wide">Iniciar Sesión</h1>
@@ -102,7 +101,10 @@ export default function Register() {
               Registro exitoso
             </p>
           )}
-          <Button disabled={loading} className="justify-center">
+          <Button
+            disabled={loading}
+            className="flex items-center justify-center text-center"
+          >
             {loading && (
               <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
             )}
