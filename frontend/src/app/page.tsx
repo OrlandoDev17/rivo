@@ -1,9 +1,23 @@
+"use client";
+
 import { ServiceCard } from "@/components/common/ServiceCard";
 import { SERVICES } from "@/lib/constants";
+import { useAuth } from "@/context/AuthContext";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const { token } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!token) {
+      router.push("/login");
+    }
+  }, [token, router]);
+
   return (
-    <main className="flex flex-col gap-4 items-center justify-center h-screen p-6">
+    <main className="flex flex-col gap-4 items-center h-screen p-6 mt-4">
       <div className="flex flex-col">
         <h1 className="text-2xl font-bold tracking-wide">
           ¿A donde te llevamos hoy?

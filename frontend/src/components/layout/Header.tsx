@@ -1,10 +1,21 @@
+"use client";
+
 /* eslint-disable @next/next/no-img-element */
 
 import { useAuth } from "@/context/AuthContext";
-import { BellIcon } from "../Icons";
+import { BellIcon } from "@/components/Icons";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export function Header() {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!user) {
+      router.push("/login");
+    }
+  }, [user, router]);
 
   const firstLetterName = user?.name
     ?.split(" ")
@@ -25,9 +36,12 @@ export function Header() {
             alt="User"
           />
         )}
-        <span className="size-10 flex items-center justify-center bg-electric-blue rounded-full font-semibold">
+        <button
+          onClick={logout}
+          className="size-10 flex items-center justify-center bg-electric-blue rounded-full font-semibold"
+        >
           {firstLetterName}
-        </span>
+        </button>
       </div>
     </header>
   );
