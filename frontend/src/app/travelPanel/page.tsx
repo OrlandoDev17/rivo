@@ -1,3 +1,5 @@
+"use client";
+
 export default function TravelPanel() {
-  return <div>Travel</div>;
+  return <main></main>;
 }

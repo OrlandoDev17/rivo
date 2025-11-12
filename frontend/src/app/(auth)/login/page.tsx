@@ -4,10 +4,12 @@
 // Componentes
 import { Button } from "@/components/common/Button";
 import { Field } from "@/components/auth/Field";
+import { motion } from "motion/react";
 
 // Constantes
 import { LOGIN_FIELDS } from "@/lib/constants";
 import Link from "next/link";
+import { fadeInUp } from "@/lib/animateVariants";
 
 // Hooks
 import { useAuth } from "@/context/AuthContext";
@@ -48,7 +50,13 @@ export default function Login() {
 
   return (
     <main className="flex items-center justify-center h-screen p-6">
-      <article className="flex flex-col gap-6 w-full max-w-md">
+      <motion.article
+        className="flex flex-col gap-6 w-full max-w-md"
+        variants={fadeInUp}
+        initial="initial"
+        animate="animate"
+        transition={{ duration: 0.5 }}
+      >
         <header className="flex flex-col items-center gap-4 mb-4">
           <img className="w-44" src="/rivo.svg" alt="Logo de Rivo" />
           <h1 className="text-3xl font-bold tracking-wide">Iniciar Sesión</h1>
@@ -81,7 +89,7 @@ export default function Login() {
             </Link>
           </p>
         </footer>
-      </article>
+      </motion.article>
     </main>
   );
 }

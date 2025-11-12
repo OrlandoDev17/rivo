@@ -4,6 +4,7 @@
 // Componentes
 import { Button } from "@/components/common/Button";
 import { Field } from "@/components/auth/Field";
+import { motion } from "motion/react";
 
 // Hooks
 import { useAuth } from "@/context/AuthContext";
@@ -13,6 +14,7 @@ import { useEffect } from "react";
 // Constantes
 import { REGISTER_FIELDS } from "@/lib/constants";
 import Link from "next/link";
+import { fadeInUp } from "@/lib/animateVariants";
 
 // Tipos
 import { FormValues } from "@/lib/types";
@@ -62,12 +64,18 @@ export default function Register() {
 
   return (
     <main className="flex items-center justify-center h-screen p-6">
-      <article className="flex flex-col gap-6 w-full max-w-md">
-        <header className="flex flex-col items-center gap-4 mb-4">
+      <motion.article
+        className="flex flex-col gap-6 w-full max-w-md"
+        variants={fadeInUp}
+        initial="initial"
+        animate="animate"
+        transition={{ duration: 0.5 }}
+      >
+        <header className="flex flex-col items-center gap-4 mb-2">
           <img className="w-44" src="/rivo.svg" alt="Logo de Rivo" />
           <h1 className="text-3xl font-bold tracking-wide">Iniciar Sesión</h1>
         </header>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-6 w-full">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full">
           {REGISTER_FIELDS.map((field) => (
             <Field key={field.name} {...field} onChange={handleChange} />
           ))}
@@ -122,7 +130,7 @@ export default function Register() {
             </Link>
           </p>
         </footer>
-      </article>
+      </motion.article>
     </main>
   );
 }
