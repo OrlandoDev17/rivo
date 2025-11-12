@@ -1,10 +1,15 @@
+import { ServiceCard } from "@/components/common/ServiceCard";
 import {
+  CalendarIcon,
+  CarIcon,
   EyeIcon,
+  HomeIcon,
+  ProfileIcon,
   SmartphoneIcon,
   UserIcon,
   UserIdIcon,
 } from "../components/Icons";
-import type { Field } from "./types";
+import type { Field, NavItem } from "./types";
 
 export const LOGIN_FIELDS: Field[] = [
   {
@@ -51,5 +56,56 @@ export const REGISTER_FIELDS: Field[] = [
     type: "password",
     placeholder: "********",
     icon: EyeIcon,
+  },
+];
+
+export const SERVICES: ServiceCard[] = [
+  {
+    id: "search-travel",
+    title: "Solicitar un nuevo viaje",
+    description:
+      "Solicita un viaje para que un conductor te reciba en el lugar que indiques y llegues a tu destino",
+    action: "search",
+    href: "/travelPanel",
+  },
+  {
+    id: "schedule-travel",
+    title: "Agendar un viaje",
+    description: "Reserva tu viaje con antelación para mayor comodidad",
+    action: "schedule",
+  },
+  {
+    id: "travel-history",
+    title: "Historial de viajes",
+    description: "Consulta los detalles de tus viajes anteriores",
+    action: "history",
+    href: "/travelHistory",
+  },
+];
+
+export const NAV_ITEMS: NavItem[] = [
+  {
+    id: "home",
+    title: "Inicio",
+    href: "/",
+    icon: HomeIcon,
+  },
+  {
+    id: "travels",
+    title: "Viajes",
+    href: "/travelPanel",
+    icon: CarIcon,
+  },
+  {
+    id: "history",
+    title: "Historial",
+    href: "/travelHistory",
+    icon: CalendarIcon,
+  },
+  {
+    id: "profile",
+    title: "Perfil",
+    href: "/profile",
+    icon: ProfileIcon,
   },
 ];

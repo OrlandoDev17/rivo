@@ -26,7 +26,7 @@ export default function Login() {
   useEffect(() => {
     if (success && isAuthenticated) {
       if (role === "CLIENT") {
-        router.push("/travelPanel");
+        router.push("/");
       }
 
       if (role === "DRIVER") {

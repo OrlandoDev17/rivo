@@ -63,3 +63,11 @@ export type Role = "CLIENT" | "DRIVER" | "ADMIN";
 
 /** Tipo para el usuario de la aplicación */
 export type AppUser = User | null;
+
+// Tipos de la barra de navegación
+export interface NavItem {
+  id: string;
+  title: string;
+  href: string;
+  icon: ComponentType<Icon>;
+}
