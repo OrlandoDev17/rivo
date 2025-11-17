@@ -8,7 +8,7 @@ export function BottomNav() {
   const isActive = (href: string) => pathname === href;
 
   return (
-    <nav className="fixed bottom-0 flex justify-center items-center w-full bg-electric-blue pt-3 pb-1 rounded-t-2xl">
+    <nav className="fixed bottom-0 flex justify-center items-center w-full h-16 bg-electric-blue pt-3 pb-1 rounded-t-2xl">
       <ul className="flex items-center justify-evenly w-full">
         {NAV_ITEMS.map(({ id, title, href, icon: Icon }) => (
           <li key={id}>

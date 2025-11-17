@@ -8,14 +8,14 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export function Header() {
-  const { user, logout } = useAuth();
+  const { token, logout, user } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (!user) {
+    if (!token) {
       router.push("/login");
     }
-  }, [user, router]);
+  }, [token, router]);
 
   const firstLetterName = user?.name
     ?.split(" ")
@@ -23,9 +23,9 @@ export function Header() {
     .join("");
 
   return (
-    <header className="flex justify-between items-center px-6 h-12">
+    <header className="flex justify-between items-center px-6 h-16">
       <picture>
-        <img className="w-26" src="/rivo.svg" alt="Rivo" />
+        <img className="w-24" src="/rivo.svg" alt="Rivo" />
       </picture>
       <div className="flex items-center gap-2">
         <BellIcon className="size-10 p-2 cursor-pointer hover:bg-electric-blue rounded-lg transition-colors" />

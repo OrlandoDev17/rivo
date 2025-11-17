@@ -2,14 +2,18 @@ import { ServiceCard } from "@/components/common/ServiceCard";
 import {
   CalendarIcon,
   CarIcon,
+  CashIcon,
+  DollarIcon,
   EyeIcon,
   HomeIcon,
   ProfileIcon,
+  RightArrowIcon,
+  RoundArrowIcon,
   SmartphoneIcon,
   UserIcon,
   UserIdIcon,
 } from "../components/Icons";
-import type { Field, NavItem } from "./types";
+import type { Field, NavItem, TravelOptions, PaymentMethod } from "./types";
 
 export const LOGIN_FIELDS: Field[] = [
   {
@@ -107,5 +111,36 @@ export const NAV_ITEMS: NavItem[] = [
     title: "Perfil",
     href: "/profile",
     icon: ProfileIcon,
+  },
+];
+
+export const TRAVEL_OPTIONS: TravelOptions[] = [
+  {
+    id: "ONE_WAY",
+    title: "Solo Ida",
+    icon: RightArrowIcon,
+  },
+  {
+    id: "ROUND_TRIP",
+    title: "Ida y Vuelta",
+    icon: RoundArrowIcon,
+  },
+];
+
+export const PAYMENT_METHODS: PaymentMethod[] = [
+  {
+    id: "CASH",
+    title: "Efectivo",
+    icon: CashIcon,
+  },
+  {
+    id: "DOLLARS",
+    title: "Divisas",
+    icon: DollarIcon,
+  },
+  {
+    id: "MOBILE_PAY",
+    title: "Pago Móvil",
+    icon: SmartphoneIcon,
   },
 ];

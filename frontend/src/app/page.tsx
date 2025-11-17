@@ -7,26 +7,23 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const { token } = useAuth();
+  const { token, loading, isHydrated } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (!token) {
+    if (isHydrated && !loading && token === null) {
       router.push("/login");
     }
-  }, [token, router]);
+  }, [token, loading, isHydrated, router]);
 
   return (
-    <main className="flex flex-col gap-4 items-center h-screen p-6 mt-4">
+    <main className="flex flex-col gap-4 justify-center items-center h-[calc(100vh-112px)] p-4">
       <div className="flex flex-col">
         <h1 className="text-2xl font-bold tracking-wide">
           ¿A donde te llevamos hoy?
         </h1>
-        <p className="text-gray-500">
-          Tu servicio de taxi profesional, rapido y seguro
-        </p>
       </div>
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-4">
         {SERVICES.map((service) => (
           <ServiceCard key={service.id} {...service} />
         ))}

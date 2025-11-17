@@ -11,8 +11,10 @@
   "dependencies": {
     "@capacitor/android": "^7.4.4",
     "@capacitor/core": "^7.4.4",
+    "@capacitor/geolocation": "^7.1.5",
     "@capacitor/ios": "^7.4.4",
     "axios": "^1.13.2",
+    "maplibre-gl": "^5.13.0",
     "motion": "^12.23.24",
     "next": "16.0.1",
     "react": "19.2.0",

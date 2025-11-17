@@ -71,3 +71,15 @@ export interface NavItem {
   href: string;
   icon: ComponentType<Icon>;
 }
+
+export interface TravelOptions {
+  id?: string;
+  title: string;
+  icon: ComponentType<Icon>;
+}
+
+export interface PaymentMethod {
+  id?: string;
+  title: string;
+  icon: ComponentType<Icon>;
+}

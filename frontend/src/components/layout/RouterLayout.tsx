@@ -14,11 +14,13 @@ export default function RouterLayout({
 
   const hideComponents = pathname === "/login" || pathname === "/register";
 
+  const hideHeader = pathname === "/travelPanel";
+
   return (
     <>
       <AuthProvider>
-        {!hideComponents && <Header />}
-        {children}
+        {!hideComponents && !hideHeader && <Header />}
+        <div className="mb-12">{children}</div>
         {!hideComponents && <BottomNav />}
       </AuthProvider>
     </>

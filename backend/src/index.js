@@ -9,6 +9,7 @@ const { initSocket } = require("./utils/socket");
 
 // Importar rutas
 const authRoutes = require("./routes/auth.routes");
+const rideRoutes = require("./routes/ride.routes");
 
 // Inicializar la app de express
 const app = express();
@@ -31,6 +32,7 @@ app.use(express.json());
 
 // Rutas
 app.use("/api/auth", authRoutes);
+app.use("/api/rides", rideRoutes);
 
 // Puerto de escucha
 const PORT = process.env.PORT || 3333;
