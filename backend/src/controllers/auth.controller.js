@@ -98,7 +98,7 @@ exports.loginUser = async (req, res) => {
     const token = jwt.sign(
       { cedula: user.cedula, role: user.role },
       JWT_SECRET,
-      { expiresIn: "1d" }
+      { expiresIn: "7d" }
     );
 
     const { password: hashedPassword, ...safeUser } = user;
