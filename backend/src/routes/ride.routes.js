@@ -1,22 +1,26 @@
-// Importamos Express y creamos el router
 const express = require("express");
 const router = express.Router();
-
-// Importamos los controladores
 const {
   createRide,
   acceptRide,
   completeRide,
-  getDriverHistory,
   getPendingRides,
+  getDriverHistory
 } = require("../controllers/ride.controller");
 
-// Definimos las rutas
-router.post("/", createRide);
-router.put("/accept", acceptRide);
-router.put("/complete", completeRide);
-router.get("/history", getDriverHistory);
-router.get("/pending", getPendingRides);
+// 🧍 Cliente solicita un viaje
+router.post("/rides", createRide);
 
-// Exportamos el router
+// 🚙 Conductor acepta el viaje
+router.put("/rides/accept", acceptRide);
+
+// ✅ Conductor completa el viaje
+router.put("/rides/complete", completeRide);
+
+// ✅ Conductor recibe viajes pendientes
+router.get("/rides/pending", getPendingRides);
+
+// ✅ Conductor recibe el historial de viajes
+router.get("/rides/history", getDriverHistory);
+
 module.exports = router;

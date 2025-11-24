@@ -9,14 +9,12 @@ const travelOptions = {
 
 const paymentMethods = {
   CASH: "Efectivo",
-  MOBILE_PAY: "Pago Móvil",
-  DOLLARS: "Divisas",
+  PAGO_MOVIL: "Pago Móvil",
+  CREDITS: "Créditos",
 };
 
 exports.createRide = async (req, res) => {
   const io = getIO();
-
-  console.log("Body recibido:", req.body);
 
   const {
     origin,
@@ -27,7 +25,7 @@ exports.createRide = async (req, res) => {
     destinationLng,
     clientCedula,
     paymentMethod,
-    travelOptions,
+    travelOption,
     scheduled,
     scheduledAt,
   } = req.body;
@@ -38,7 +36,7 @@ exports.createRide = async (req, res) => {
     !destination ||
     !clientCedula ||
     !paymentMethod ||
-    !travelOptions
+    !travelOption
   ) {
     return res.status(400).json({ error: "Faltan datos obligatorios" });
   }
@@ -65,7 +63,7 @@ exports.createRide = async (req, res) => {
       destination,
       clientCedula,
       paymentMethod,
-      travelOptions,
+      travelOption,
       scheduled,
       scheduledAt: scheduled ? new Date(scheduledAt) : null,
       status: "PENDING",
@@ -82,12 +80,11 @@ exports.createRide = async (req, res) => {
     });
 
     // Emitir por WebSocket a conductores
-    // Emitir por WebSocket a conductores
     io.to("conductores").emit("nuevoViaje", {
       id: ride.id,
       origin,
       destination,
-      travelOptions,
+      travelOption,
       paymentMethod,
       scheduled,
       scheduledAt,
@@ -108,7 +105,7 @@ exports.createRide = async (req, res) => {
         status: ride.status,
         origin: ride.origin,
         destination: ride.destination,
-        travelOptions: ride.travelOptions,
+        travelOption: ride.travelOption,
         paymentMethod: ride.paymentMethod,
         scheduled: ride.scheduled,
         scheduledAt: ride.scheduledAt,
@@ -158,7 +155,7 @@ exports.acceptRide = async (req, res) => {
         phone: true,
         vehicleBrand: true,
         vehicleModel: true,
-        vehiclephoto: true,
+        vehiclePhotoUrl: true,
       },
     });
 
@@ -275,7 +272,7 @@ exports.getPendingRides = async (req, res) => {
             name: true,
             phone: true,
             address: true,
-            photo: true,
+            photoUrl: true,
             rides: {
               where: { status: "COMPLETED" },
               select: { id: true },
@@ -293,7 +290,7 @@ exports.getPendingRides = async (req, res) => {
       originLng: ride.originLng,
       destinationLat: ride.destinationLat,
       destinationLng: ride.destinationLng,
-      travelOptions: ride.travelOptions,
+      travelOption: ride.travelOption,
       paymentMethod: ride.paymentMethod,
       scheduled: ride.scheduled,
       scheduledAt: ride.scheduledAt,
@@ -306,7 +303,7 @@ exports.getPendingRides = async (req, res) => {
         name: ride.client.name,
         phone: ride.client.phone,
         address: ride.client.address,
-        photo: ride.client.photo,
+        photoUrl: ride.client.photoUrl,
         totalRides: ride.client.rides.length,
       },
     }));
@@ -342,7 +339,7 @@ exports.getDriverHistory = async (req, res) => {
             cedula: true,
             name: true,
             phone: true,
-            photo: true,
+            photoUrl: true,
             address: true,
             // ✅ No se incluye rides para evitar errores
           },
@@ -359,7 +356,7 @@ exports.getDriverHistory = async (req, res) => {
       originLng: ride.originLng,
       destinationLat: ride.destinationLat,
       destinationLng: ride.destinationLng,
-      travelOptions: ride.travelOptions,
+      travelOption: ride.travelOption,
       paymentMethod: ride.paymentMethod,
       scheduled: ride.scheduled,
       scheduledAt: ride.scheduledAt,
@@ -373,7 +370,7 @@ exports.getDriverHistory = async (req, res) => {
         name: ride.client.name,
         phone: ride.client.phone,
         address: ride.client.address,
-        photo: ride.client.photo,
+        photoUrl: ride.client.photoUrl,
       },
     }));
 
