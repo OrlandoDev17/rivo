@@ -6,6 +6,7 @@ import { PAYMENT_METHODS, TRAVEL_OPTIONS } from "@/lib/constants";
 import { useState } from "react";
 import { useCreateRides } from "@/hooks/useCreateRides";
 import { useAuth } from "@/context/AuthContext";
+import Notification from "@/components/common/Notification";
 
 export default function TravelPanel() {
   // Formulario
@@ -33,6 +34,8 @@ export default function TravelPanel() {
     setTravelOption(option);
   };
 
+  const [showNotification, setShowNotification] = useState(false);
+
   // Funcion para crear el viaje
   const handleSubmit = async () => {
     await createRide({
@@ -44,6 +47,7 @@ export default function TravelPanel() {
       scheduled: false,
       scheduledAt: null,
     });
+    setShowNotification(true);
   };
 
   const isDisabled = () => {
@@ -51,7 +55,17 @@ export default function TravelPanel() {
   };
 
   return (
-    <main className="flex flex-col gap-4">
+    <main className="flex flex-col gap-4 relative">
+      {showNotification && (
+        <Notification
+          action="createRide"
+          onClose={() => setShowNotification(false)}
+        >
+          <p className="text-sm text-center text-gray-300">
+            Un conductor se pondra en contacto contigo en un momento.
+          </p>
+        </Notification>
+      )}
       <TravelMap
         onChangeOrigin={setOrigin}
         onChangeDestination={setDestination}

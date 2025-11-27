@@ -8,4 +8,5 @@
 body {
   @apply bg-linear-to-br from-electric-blue to-dark-blue min-h-screen text-white;
   font-family: var(--font-montserrat);
+  margin-bottom: 2.5rem;
 }

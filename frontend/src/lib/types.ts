@@ -83,3 +83,35 @@ export interface PaymentMethod {
   title: string;
   icon: ComponentType<Icon>;
 }
+
+export interface PendingRide {
+  id: string;
+  origin: string;
+  destination: string;
+  originLat?: number;
+  originLng?: number;
+  destinationLat?: number;
+  destinationLng?: number;
+  travelOption: string;
+  paymentMethod: string;
+  scheduled: boolean;
+  scheduledAt?: string | null;
+  requestedAt?: number;
+  status:
+    | "PENDING"
+    | "ACCEPTED"
+    | "IN_PROGRESS"
+    | "COMPLETED"
+    | "CANCELLED"
+    | "ASSIGNED";
+  note?: string;
+  fare?: number;
+  cliente: {
+    cedula: string;
+    name: string;
+    phone: string;
+    address?: string;
+    photoUrl?: string;
+    totalRides?: number;
+  };
+}

@@ -8,14 +8,14 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 export function Header() {
-  const { token, logout, user } = useAuth();
+  const { logout, user, logoutSuccess } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (!token) {
+    if (logoutSuccess) {
       router.push("/login");
     }
-  }, [token, router]);
+  }, [logoutSuccess, router]);
 
   const firstLetterName = user?.name
     ?.split(" ")
