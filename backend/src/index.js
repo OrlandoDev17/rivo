@@ -23,7 +23,6 @@ initSocket(server);
 // Middlewares globales
 app.use(
   cors({
-    origin: "*", // Puedes restringir esto si lo necesitas
     credentials: true,
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
