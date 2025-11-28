@@ -14,7 +14,7 @@ export default function DriverPanel() {
     fetchRides();
     fetchHistory();
   });
-s
+
   const handleAcceptRide = (rideId: string) => {
     console.log("Accepting ride:", rideId);
     // TODO: Implement accept ride logic

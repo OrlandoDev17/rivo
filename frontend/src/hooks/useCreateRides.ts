@@ -1,50 +1,13 @@
 import { useState } from "react";
 import axios from "axios";
-
-type RidePayload = {
-  origin: string;
-  destination: string;
-  clientCedula: string | undefined;
-  paymentMethod: string;
-  travelOptions: string;
-  scheduled: boolean;
-  scheduledAt: string | null;
-  originLat?: number | null;
-  originLng?: number | null;
-  destinationLat?: number | null;
-  destinationLng?: number | null;
-};
-
-type RideResponse = {
-  message: string;
-  ride: {
-    id: string;
-    status: string;
-    origin: string;
-    destination: string;
-    travelOptions: string;
-    paymentMethod: string;
-    scheduled: boolean;
-    scheduledAt: string | null;
-    requestedAt?: number;
-    cliente: {
-      cedula: string;
-      name: string;
-      phone: string;
-      address: string;
-    };
-    conductor: {
-      cedula: string;
-      name: string;
-      phone: string;
-    } | null;
-  };
-};
+import type { RideResponse, RidePayload } from "@/lib/types";
 
 export const useCreateRides = () => {
   const [rides, setRides] = useState<RideResponse[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   const createRide = async (payload: RidePayload) => {
     setLoading(true);
@@ -52,7 +15,7 @@ export const useCreateRides = () => {
 
     try {
       const res = await axios.post<RideResponse>(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/rides`,
+        `${API_URL}/api/rides`,
         payload,
         {
           headers: {

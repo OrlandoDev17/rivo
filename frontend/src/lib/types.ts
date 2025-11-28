@@ -115,3 +115,44 @@ export interface PendingRide {
     totalRides?: number;
   };
 }
+
+// Create Ride
+export type RidePayload = {
+  origin: string;
+  destination: string;
+  clientCedula: string | undefined;
+  paymentMethod: string;
+  travelOptions: string;
+  scheduled: boolean;
+  scheduledAt: string | null;
+  originLat?: number | null;
+  originLng?: number | null;
+  destinationLat?: number | null;
+  destinationLng?: number | null;
+};
+
+export type RideResponse = {
+  message: string;
+  ride: {
+    id: string;
+    status: string;
+    origin: string;
+    destination: string;
+    travelOptions: string;
+    paymentMethod: string;
+    scheduled: boolean;
+    scheduledAt: string | null;
+    requestedAt?: number;
+    cliente: {
+      cedula: string;
+      name: string;
+      phone: string;
+      address: string;
+    };
+    conductor: {
+      cedula: string;
+      name: string;
+      phone: string;
+    } | null;
+  };
+};
