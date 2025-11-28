@@ -2,17 +2,6 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 const { getIO } = require("../utils/socket");
 
-const travelOptions = {
-  ONE_WAY: "Solo Ida",
-  ROUND_TRIP: "Ida y Vuelta",
-};
-
-const paymentMethods = {
-  CASH: "Efectivo",
-  PAGO_MOVIL: "Pago Móvil",
-  CREDITS: "Créditos",
-};
-
 exports.createRide = async (req, res) => {
   const io = getIO();
 
@@ -49,7 +38,6 @@ exports.createRide = async (req, res) => {
         cedula: true,
         name: true,
         phone: true,
-        address: true,
       },
     });
 
@@ -93,7 +81,6 @@ exports.createRide = async (req, res) => {
         cedula: client.cedula,
         name: client.name,
         phone: client.phone,
-        address: client.address,
       },
     });
 
@@ -127,10 +114,10 @@ exports.createRide = async (req, res) => {
 
 exports.acceptRide = async (req, res) => {
   const io = getIO();
-  const { rideId, driverCedula, fare } = req.body;
+  const { rideId, driverCedula, cost } = req.body;
 
   // 🔐 Validación básica
-  if (!rideId || !driverCedula || fare === undefined) {
+  if (!rideId || !driverCedula || cost === undefined) {
     return res.status(400).json({ error: "Faltan datos obligatorios" });
   }
 
@@ -168,7 +155,7 @@ exports.acceptRide = async (req, res) => {
       where: { id: rideId },
       data: {
         driverCedula,
-        fare,
+        cost,
         assignedAt: new Date(),
         status: "ASSIGNED",
         confirmationSent: true,
@@ -190,7 +177,7 @@ exports.acceptRide = async (req, res) => {
     io.to(ride.clientCedula).emit("viajeAsignado", {
       rideId,
       conductor: driver,
-      fare,
+      cost,
     });
 
     // ✅ Respuesta completa
@@ -297,7 +284,7 @@ exports.getPendingRides = async (req, res) => {
       requestedAt: ride.requestedAt,
       status: ride.status,
       note: ride.note,
-      fare: ride.fare,
+      cost: ride.cost,
       cliente: {
         cedula: ride.client.cedula,
         name: ride.client.name,
@@ -364,7 +351,7 @@ exports.getDriverHistory = async (req, res) => {
       completedAt: ride.completedAt,
       status: ride.status,
       note: ride.note,
-      fare: ride.fare,
+      cost: ride.cost,
       cliente: {
         cedula: ride.client.cedula,
         name: ride.client.name,

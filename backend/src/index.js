@@ -34,12 +34,9 @@ app.use(express.json()); // Permite recibir datos en formato JSON
 
 // Usar Rutas
 app.use("/api/auth", authRoutes);
-app.use("/api", rideRoutes);
+app.use("/api/rides", rideRoutes);
 app.use("/api", adminRoutes);
 app.use("/api/user", profileRoutes);
-
-// Servir archivos estáticos desde /uploads
-app.use("/uploads", express.static("uploads"));
 
 // Puerto de escucha
 const PORT = process.env.PORT || 3333;

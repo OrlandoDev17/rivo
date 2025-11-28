@@ -79,7 +79,7 @@ model Ride {
 
   // 💰 Método de pago y tarifa
   paymentMethod    PaymentMethod
-  fare             Float?
+  cost             Float
 
   // ✅ Confirmación de asignación
   confirmationSent Boolean    @default(false)

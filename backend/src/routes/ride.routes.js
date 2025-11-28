@@ -5,22 +5,22 @@ const {
   acceptRide,
   completeRide,
   getPendingRides,
-  getDriverHistory
+  getDriverHistory,
 } = require("../controllers/ride.controller");
 
 // 🧍 Cliente solicita un viaje
-router.post("/rides", createRide);
+router.post("/", createRide);
 
 // 🚙 Conductor acepta el viaje
-router.put("/rides/accept", acceptRide);
+router.put("/accept", acceptRide);
 
 // ✅ Conductor completa el viaje
-router.put("/rides/complete", completeRide);
+router.put("/complete", completeRide);
 
 // ✅ Conductor recibe viajes pendientes
-router.get("/rides/pending", getPendingRides);
+router.get("/pending", getPendingRides);
 
 // ✅ Conductor recibe el historial de viajes
-router.get("/rides/history", getDriverHistory);
+router.get("/history", getDriverHistory);
 
 module.exports = router;
